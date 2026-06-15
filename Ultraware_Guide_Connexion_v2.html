@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultraware — Guide de connexion Ultra3000</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #f5f3ef;
+    --surface:   #ffffff;
+    --surface2:  #f0ede8;
+    --border:    #ddd9d2;
+    --border2:   #c8c3bb;
+    --text:      #1a1916;
+    --muted:     #6b6760;
+    --faint:     #9c9890;
+
+    --blue:      #1a4f8a;
+    --blue-bg:   #e8f0f9;
+    --blue-bd:   #b3cde8;
+
+    --green:     #1a6640;
+    --green-bg:  #e6f4ec;
+    --green-bd:  #a8d8bc;
+
+    --amber:     #7a4f08;
+    --amber-bg:  #fdf3e0;
+    --amber-bd:  #f0d090;
+
+    --red:       #8a1a1a;
+    --red-bg:    #fce8e8;
+    --red-bd:    #e8b3b3;
+
+    --mono: 'IBM Plex Mono', monospace;
+    --serif: 'Lora', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+
+    --radius: 8px;
+    --radius-lg: 12px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 3rem 2rem;
+  }
+
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .header-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-bottom: 6px;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--blue);
+  }
+
+  .header-sub {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 6px;
+    font-weight: 300;
+  }
+
+  .header-ref {
+    margin-left: auto;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 18px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.8;
+    white-space: nowrap;
+  }
+
+  .header-ref strong {
+    color: var(--text);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 3rem 4rem;
+  }
+
+  /* ── PHASE HEADER ── */
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .phase-header:first-of-type { margin-top: 0; }
+
+  .phase-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .phase-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .phase-a .phase-dot  { background: var(--blue); }
+  .phase-a .phase-title { color: var(--blue); }
+  .phase-b .phase-dot  { background: var(--green); }
+  .phase-b .phase-title { color: var(--green); }
+  .phase-c .phase-dot  { background: var(--amber); }
+  .phase-c .phase-title { color: var(--amber); }
+  .phase-d .phase-dot  { background: var(--red); }
+  .phase-d .phase-title { color: var(--red); }
+
+  .phase-desc {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--faint);
+  }
+
+  /* ── STEP CARD ── */
+  .step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .step:hover { border-color: var(--border2); }
+  .step.open  { border-color: var(--border2); box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+
+  .step-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.1s;
+  }
+  .step-head:hover { background: var(--surface2); }
+
+  .step-num {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .phase-a .step-num { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-bd); }
+  .phase-b .step-num { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-bd); }
+  .phase-c .step-num { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-bd); }
+  .phase-d .step-num { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-bd); }
+
+  .step-head-text { flex: 1; min-width: 0; }
+
+  .step-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .step-subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+    font-weight: 300;
+  }
+
+  .chevron {
+    width: 22px; height: 22px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.25s, background 0.15s;
+    background: var(--bg);
+  }
+  .chevron svg { width: 11px; height: 11px; stroke: var(--muted); }
+  .step.open .chevron { transform: rotate(180deg); background: var(--surface2); }
+
+  /* ── STEP BODY ── */
+  .step-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .step.open .step-body { max-height: 900px; }
+
+  .step-inner {
+    border-top: 1px solid var(--border);
+    padding: 20px 22px 22px;
+  }
+
+  /* ── SUB STEPS ── */
+  .substep {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+    font-size: 13.5px;
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .substep:last-of-type { margin-bottom: 0; }
+
+  .sn {
+    min-width: 22px; height: 22px;
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .phase-a .sn { background: var(--blue-bg); color: var(--blue); }
+  .phase-b .sn { background: var(--green-bg); color: var(--green); }
+  .phase-c .sn { background: var(--amber-bg); color: var(--amber); }
+  .phase-d .sn { background: var(--red-bg); color: var(--red); }
+
+  /* ── CODE PILLS ── */
+  code {
+    font-family: var(--mono);
+    font-size: 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 6px;
+    color: var(--text);
+  }
+
+  /* ── NOTES ── */
+  .note {
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 14px;
+    border-left: 3px solid;
+  }
+
+  .note-info    { background: var(--blue-bg);  border-color: var(--blue);  color: #1a3f6e; }
+  .note-ok      { background: var(--green-bg); border-color: var(--green); color: #134d30; }
+  .note-warn    { background: var(--amber-bg); border-color: var(--amber); color: #5c3a06; }
+  .note-danger  { background: var(--red-bg);   border-color: var(--red);   color: #6b1414; }
+
+  .note strong  { font-weight: 600; }
+
+  /* ── PARAM TABLE ── */
+  .param-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  @media (max-width: 600px) { .param-grid { grid-template-columns: 1fr; } }
+
+  .param-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 13px;
+  }
+
+  .param-name {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 3px;
+  }
+
+  .param-desc {
+    font-size: 12.5px;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  /* ── LEGEND PILLS ── */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+  }
+
+  .pill {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 99px;
+    border: 1px solid;
+  }
+
+  .pill-a { background: var(--blue-bg);  color: var(--blue);  border-color: var(--blue-bd); }
+  .pill-b { background: var(--green-bg); color: var(--green); border-color: var(--green-bd); }
+  .pill-c { background: var(--amber-bg); color: var(--amber); border-color: var(--amber-bd); }
+  .pill-d { background: var(--red-bg);   color: var(--red);   border-color: var(--red-bd); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    padding: 1.2rem 3rem;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--faint);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-width: 100%;
+  }
+
+  /* ── STAGGER ANIM ── */
+  .step {
+    animation: fadeUp 0.3s both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="header-label">Allen-Bradley · Rockwell Automation · 2098-UM001G-EN-P</div>
+      <h1>Guide de connexion<br><em>Ultraware</em> — Ultra3000</h1>
+      <p class="header-sub">Accéder au drive 2098-DSD-075 et lire sa configuration de base</p>
+    </div>
+    <div class="header-ref">
+      <strong>Prérequis matériels</strong>
+      PC Windows + Ultraware v1.8+<br>
+      Cable RS-232 DB9 → CN3 du drive<br>
+      Drive sous tension (LED verte allumée)<br>
+      Ref. logiciel : <code>2098-UWCPRG</code>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div class="legend">
+    <span class="pill pill-a">Phase A — Installation et câblage</span>
+    <span class="pill pill-b">Phase B — Connexion au drive</span>
+    <span class="pill pill-c">Phase C — Lecture et sauvegarde</span>
+    <span class="pill pill-d">Phase D — Reprogrammer le drive pour un autre moteur</span>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       PHASE A
+  ═══════════════════════════════════ -->
+  <div class="phase-header phase-a">
+    <div class="phase-dot"></div>
+    <span class="phase-title">Phase A — Installation et câblage</span>
+    <span class="phase-desc">Logiciel + connexion physique PC → drive</span>
+  </div>
+
+  <div class="step phase-a" style="animation-delay:0ms">
+    <div class="step-head">
+      <div class="step-num">A1</div>
+      <div class="step-head-text">
+        <div class="step-title">Installer le logiciel Ultraware</div>
+        <div class="step-subtitle">Référence Allen-Bradley 2098-UWCPRG — version 1.8 ou supérieure</div>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5L5 6.5L8 3.5"/></svg></div>
+    </div>
+    <div class="step-body"><div class="step-inner">
+      <div class="substep"><span class="sn">1</span><span>Télécharger Ultraware depuis le site Rockwell Automation (<code>ab.com</code>) ou depuis le CD fourni avec le drive (réf. <code>2098-UWCPRG</code>).</span></div>
+      <div class="substep"><span class="sn">2</span><span>Installer sur un PC Windows avec un port COM série disponible (RS-232) ou un adaptateur USB-RS232.</span></div>
+      <div class="substep"><span class="sn">3</span><span>Durant l'installation, accepter l'installation des drivers série si demandée.</span></div>
+      <div class="note note-info"><strong>Info :</strong> Le manuel confirme (pub. 2098-UM001G-EN-P). La connexion au 2098-DSD-075 utilise le port série CN3 du drive via RS-232 ou RS-485.</div>
+    </div></div>
+  </div>
+
+  <div class="step phase-a" style="animation-delay:40ms">
+    <div class="step-head">
+      <div class="step-num">A2</div>
+      <div class="step-head-text">
+        <div class="step-title">Préparer le câble de connexion PC → CN3</div>
+        <div class="step-subtitle">Câble RS-232 DB9 — connexion directe ou via adaptateur USB</div>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5L5 6.5L8 3.5"/></svg></div>
+    </div>
+    <div class="step-body"><div class="step-inner">
+      <div class="substep"><span class="sn">1</span><span>Identifier le connecteur <code>CN3</code> sur le drive — connecteur DB-9 femelle sur la face supérieure du drive.</span></div>
+      <div class="substep"><span class="sn">2</span><span>Utiliser le câble série Allen-Bradley réf. <code>2090-UXUSBDC</code> ou un câble RS-232 DB9 null-modem standard.</span></div>
+      <div class="substep"><span class="sn">3</span><span>Si le PC n'a pas de port RS-232 : utiliser un adaptateur <code>USB → RS-232</code>. Le chip FTDI est le plus fiable pour la stabilité de communication.</span></div>
+      <div class="substep"><span class="sn">4</span><span>Brancher une extrémité sur le PC (ou l'adaptateur) et l'autre sur <code>CN3</code> du drive.</span></div>
+      <div class="note note-warn"><strong>Attention :</strong> Intervention hors moteur. Le drive doit être sous tension avant de communiquer. De préférence, alimenter uniquement la carte de contrôle via les bornes <code>L1-AUX</code> et <code>L2-AUX</code> — dans ce cas la LED verte ne sera pas allumée. Si l'alimentation se fait uniquement depuis la carte de puissance, la LED sera allumée (non obligatoire).</div>
+    </div></div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       PHASE B
+  ═══════════════════════════════════ -->
+  <div class="phase-header phase-b">
+    <div class="phase-dot"></div>
+    <span class="phase-title">Phase B — Connexion et accès au drive</span>
+    <span class="phase-desc">Paramétrage port série + détection du drive en ligne</span>
+  </div>
+
+  <div class="step phase-b" style="animation-delay:80ms">
+    <div class="step-head">
+      <div class="step-num">B1</div>
+      <div class="step-head-text">
+        <div class="step-title">Configurer le port série dans Ultraware</div>
+        <div class="step-subtitle">Menu Tools → Serial Port — port COM + vitesse 38400 bps</div>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5L5 6.5L8 3.5"/></svg></div>
+    </div>
+    <div class="step-body"><div class="step-inner">
+      <div class="substep"><span class="sn">1</span><span>Ouvrir Ultraware. À la première ouverture, choisir <code>Create new file</code> puis cliquer OK.</span></div>
+      <div class="substep"><span class="sn">2</span><span>Aller dans le menu <code>Tools</code> → <code>Serial Port</code>.</span></div>
+      <div class="substep"><span class="sn">3</span><span>Dans la fenêtre "PC Communications Setup", configurer :<br><br>
+        — <strong>Port COM</strong> : sélectionner le bon port (ex: COM3 — vérifier dans le Gestionnaire de périphériques Windows)<br>
+        — <strong>Baud Rate</strong> : <code>38400</code> (valeur par défaut, confirmée par le manuel)<br>
+        — <strong>Format</strong> : 8 bits de données, pas de parité
+      </span></div>
+      <div class="substep"><span class="sn">4</span><span>Cliquer OK pour valider.</span></div>
+      <div class="note note-danger"><strong>Important :</strong> Le manuel précise que les <em>"Ultra3000 drives do not support the 57600 bps rate"</em>. Ne jamais utiliser 57600 — utiliser uniquement 38400.</div>
+      <div class="note note-info"><strong>Recommandation :</strong> Si le drive n'est pas détecté à 38400 bps, essayer le Baud Rate <code>9600</code> — certains drives configurés en usine ou après reset peuvent répondre à cette vitesse.</div>
+    </div></div>
+  </div>
+
+  <div class="step phase-b" style="animation-delay:120ms">
+    <div class="step-head">
+      <div class="step-num">B2</div>
+      <div class="step-head-text">
+        <div class="step-title">Scanner le réseau pour détecter le drive</div>
+        <div class="step-subtitle">Scan automatique au démarrage — ou Tools → Rescan</div>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5L5 6.5L8 3.5"/></svg></div>
+    </div>
+    <div class="step-body"><div class="step-inner">
+      <div class="substep"><span class="sn">1</span><span>Ultraware scanne automatiquement les nœuds 0 à 255 au démarrage. Une barre de progression "Scan For On-Line Drives" s'affiche. Attendre la fin.</span></div>
+      <div class="substep"><span class="sn">2</span><span>Si le drive n'apparaît pas : aller dans <code>Tools</code> → <code>Rescan</code> pour relancer la recherche manuellement.</span></div>
+      <div class="substep"><span class="sn">3</span><span>Le drive détecté apparaît dans le panneau gauche "Workspace", sous la branche <code>On-Line Drives</code>. Son nom par défaut est <code>Drive</code> ou <code>&lt;Unnamed Drive&gt;</code>.</span></div>
+      <div class="note note-ok"><strong>Connexion réussie</strong> si le drive apparaît sous "On-Line Drives". La LED Status du drive doit afficher un cercle tournant (version standard) ou un <code>4</code> fixe (version SERCOS).</div>
+      <div class="note note-warn"><strong>Si le drive n'apparaît pas :</strong> vérifier le câble CN3, le port COM sélectionné, le baud rate (38400), et que la LED verte "Logic Power" est bien allumée sur le drive.</div>
+    </div></div>
+  </div>
+
+  <div class="step phase-b" style="animation-delay:160ms">
+    <div class="step-head">
+      <div class="step-num">B3</div>
+      <div class="step-head-text">
+        <div class="step-title">Ouvrir la fenêtre de propriétés du drive</div>
+        <div class="step-subtitle">Double-clic sur le drive dans la branche On-Line Drives</div>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5L5 6.5L8 3.5"/></svg></div>
+    </div>
+    <div class="step-body"><div class="step-inner">
+      <div class="substep"><span class="sn">1</span><span>Dans le Workspace, double-cliquer sur le drive sous "On-Line Drives".</span></div>
+      <div class="substep"><span class="sn">2</span><span>La fenêtre "Drive Properties" s'ouvre dans la zone principale. Elle affiche en temps réel tous les paramètres du drive physique.</span></div>
+      <div class="substep"><span class="sn">3</span><span>Pour accéder aux sous-sections, cliquer sur les branches enfants dans le Workspace :</span></div>
+      <div class="param-grid">
+        <div class="param-item">
+          <div class="param-name">Motor</div>
+          <div class="param-desc">Modèle moteur sélectionné, direction, identification automatique</div>
+        </div>
+        <div class="param-item">
+          <div class="param-name">Tuning</div>
+          <div class="param-desc">Gains PID — Kp (position), Kv (vitesse), Ki (intégral)</div>
+        </div>
+        <div class="param-item">
+          <div class="param-name">Encoders</div>
+          <div class="param-desc">Type d'encodeur configuré, résolution, signaux utilisés</div>
+        </div>
+        <div class="param-item">
+          <div class="param-name">Digital Inputs</div>
+          <div class="param-desc">Affectation des 8 entrées numériques (enable, reset…)</div>
+        </div>
+        <div class="param-item">
+          <div class="param-name">Digital Outputs</div>
+          <div class="param-desc">Affectation des 4 sorties numériques + relais CN1-43/44</div>
+        </div>
+        <div class="param-item">
+          <div class="param-name">Faults</div>
+          <div class="param-desc">Historique des défauts enregistrés dans le drive</div>
+        </div>
+      </div>
+      <div class="note note-info"><strong>Info :</strong> Les paramètres sont lus directement depuis le drive online — pas besoin de les entrer manuellement. C'est la configuration réelle du drive physique.</div>
+    </div></div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       PHASE C
+  ═══════════════════════════════════ -->
+  <div class="phase-header phase-c">
+    <div class="phase-dot"></div>
+    <span class="phase-title">Phase C — Lire, sauvegarder et exporter</span>
+    <span class="phase-desc">Backup de la configuration pour archivage ou remplacement</span>
+  </div>
+
+  <div class="step phase-c" style="animation-delay:200ms">
+    <div class="step-head">
+      <div class="step-num">C1</div>
+      <div class="step-head-text">
+        <div class="step-title">Copier le drive online vers un fichier offline</div>
+        <div class="step-subtitle">La méthode la plus simple — Copy / Paste dans le Workspace</div>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5L5 6.5L8 3.5"/></svg></div>
+    </div>
+    <div class="step-body"><div class="step-inner">
+      <div class="substep"><span class="sn">1</span><span>Dans le Workspace, repérer le drive sous <code>On-Line Drives</code>.</span></div>
+      <div class="substep"><span class="sn">2</span><span>Faire un clic droit sur le drive → <code>Copy</code> (ou <code>Ctrl+C</code>).</span></div>
+      <div class="substep"><span class="sn">3</span><span>Cliquer sur le fichier Ultraware dans la branche <code>File</code> du Workspace (le fichier .udb créé au début).</span></div>
+      <div class="substep"><span class="sn">4</span><span>Faire clic droit → <code>Paste</code> (ou <code>Ctrl+V</code>). Le drive avec toute sa configuration apparaît maintenant dans la branche offline.</span></div>
+      <div class="substep"><span class="sn">5</span><span>Sauvegarder : <code>File</code> → <code>Save</code> (<code>Ctrl+S</code>). Donner un nom explicite, par exemple : <code>Ultra3000-075_config_originale.udb</code>.</span></div>
+      <div class="note note-ok"><strong>Résultat :</strong> Le fichier .udb contient maintenant toute la configuration lue depuis le drive physique. C'est votre sauvegarde de référence. Elle peut être rechargée sur un drive de remplacement.</div>
+    </div></div>
+  </div>
+
+  <div class="step phase-c" style="animation-delay:240ms">
+    <div class="step-head">
+      <div class="step-num">C2</div>
+      <div class="step-head-text">
+        <div class="step-title">Exporter en fichier .uxf (format portable)</div>
+        <div class="step-subtitle">File → Export — pour partage ou import sur un autre PC</div>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5L5 6.5L8 3.5"/></svg></div>
+    </div>
+    <div class="step-body"><div class="step-inner">
+      <div class="substep"><span class="sn">1</span><span>Cliquer sur le drive dans la branche offline (File).</span></div>
+      <div class="substep"><span class="sn">2</span><span>Menu <code>File</code> → <code>Export</code> (ou clic droit sur le drive → Export).</span></div>
+      <div class="substep"><span class="sn">3</span><span>Choisir un nom et un emplacement. Le fichier est sauvegardé avec l'extension <code>.uxf</code> (User data eXchange File).</span></div>
+      <div class="substep"><span class="sn">4</span><span>Ce fichier .uxf peut être importé sur n'importe quel PC avec Ultraware pour restaurer la configuration sur un drive de remplacement.</span></div>
+      <div class="note note-info"><strong>Différence :</strong> Le <code>.uxf</code> est le format de backup portable (un seul drive). Le <code>.udb</code> est la base de données Ultraware complète (peut contenir plusieurs drives). Les deux sont utiles — garder les deux.</div>
+    </div></div>
+  </div>
+
+  <div class="step phase-c" style="animation-delay:280ms">
+    <div class="step-head">
+      <div class="step-num">C3</div>
+      <div class="step-head-text">
+        <div class="step-title">Paramètres de base importants à relever</div>
+        <div class="step-subtitle">Ce qu'il faut noter en priorité dans la configuration</div>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5L5 6.5L8 3.5"/></svg></div>
+    </div>
+    <div class="step-body"><div class="step-inner">
+      <div class="substep"><span class="sn">1</span><span><code>Motor Model</code> — modèle exact du moteur configuré. Doit correspondre à la plaque signalétique du moteur physique.</span></div>
+      <div class="substep"><span class="sn">2</span><span><code>Auto Motor Iden</code> — Enabled ou Disabled. Si Enabled : le drive lit les paramètres depuis l'encodeur intelligent (Stegmann) au démarrage.</span></div>
+      <div class="substep"><span class="sn">3</span><span><code>Operation Mode</code> — mode de commande : Analog Velocity, Analog Position, Preset Velocity, etc. Important pour le câblage CN1.</span></div>
+      <div class="substep"><span class="sn">4</span><span><code>Drive Address</code> — adresse série du drive (0 par défaut pour axe unique). Important si plusieurs drives en chaîne RS-485.</span></div>
+      <div class="substep"><span class="sn">5</span><span><code>Baud Rate</code> — vitesse de communication configurée dans le drive. Doit être identique au paramètre PC (38400).</span></div>
+      <div class="substep"><span class="sn">6</span><span><code>Current Limits +/-</code> — limites de courant positif et négatif. Protection moteur et drive.</span></div>
+      <div class="substep"><span class="sn">7</span><span>Branche <code>Tuning</code> : noter les gains Kp, Kv, Ki. Ce sont les paramètres les plus difficiles à retrouver si perdus — ils sont spécifiques à chaque application.</span></div>
+      <div class="substep"><span class="sn">8</span><span>Branche <code>Faults</code> : lire l'historique des défauts — utile pour comprendre l'état de santé du drive.</span></div>
+      <div class="note note-ok"><strong>Conseil :</strong> En plus de la sauvegarde .udb, faire une capture d'écran de chaque fenêtre (Drive, Motor, Tuning, Encoders, Digital I/O). Double sécurité en cas de corruption du fichier.</div>
+    </div></div>
+  </div>
+
+  <div class="step phase-c" style="animation-delay:320ms">
+    <div class="step-head">
+      <div class="step-num">C4</div>
+      <div class="step-head-text">
+        <div class="step-title">Remettre les paramètres aux valeurs d'usine (si nécessaire)</div>
+        <div class="step-subtitle">Commande "Reset EEPROM to Factory Setting" — à utiliser avec précaution</div>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5L5 6.5L8 3.5"/></svg></div>
+    </div>
+    <div class="step-body"><div class="step-inner">
+      <div class="substep"><span class="sn">1</span><span>Dans la fenêtre Drive Properties du drive online, cliquer <code>Show Commands</code> pour afficher la section commandes.</span></div>
+      <div class="substep"><span class="sn">2</span><span>Cliquer le bouton <code>Reset EEPROM to Factory Setting</code>.</span></div>
+      <div class="substep"><span class="sn">3</span><span>Cette commande réinitialise tous les paramètres aux valeurs d'usine. L'historique des défauts et le compteur "Time in Service" ne sont <strong>pas</strong> effacés.</span></div>
+      <div class="note note-danger"><strong>Attention :</strong> N'effectuer cette opération <em>qu'après</em> avoir sauvegardé la configuration via C1 et C2. Une fois réinitialisé, la configuration personnalisée est définitivement perdue depuis le drive.</div>
+    </div></div>
+  </div>
+
+</main>
+
+  <!-- ═══════════════════════════════════
+       PHASE D
+  ═══════════════════════════════════ -->
+  <div class="phase-header phase-d">
+    <div class="phase-dot"></div>
+    <span class="phase-title">Phase D — Reprogrammer le drive pour un autre moteur</span>
+    <span class="phase-desc">Chargement d'un nouveau fichier de configuration moteur (.dxl)</span>
+  </div>
+
+  <div class="step phase-d" style="animation-delay:360ms">
+    <div class="step-head">
+      <div class="step-num">D1</div>
+      <div class="step-head-text">
+        <div class="step-title">Importer le programme du nouveau moteur</div>
+        <div class="step-subtitle">Fichier au format .dxl — à importer depuis la branche Off-Line</div>
+      </div>
+      <div class="chevron"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5L5 6.5L8 3.5"/></svg></div>
+    </div>
+    <div class="step-body"><div class="step-inner">
+      <div class="substep"><span class="sn">1</span><span>S'assurer de disposer du fichier de configuration moteur au format <code>.dxl</code> correspondant au nouveau moteur à piloter.</span></div>
+      <div class="substep"><span class="sn">2</span><span>Dans le Workspace, se positionner sur la branche <code>Off-Line</code> (section File).</span></div>
+      <div class="substep"><span class="sn">3</span><span>Faire un <strong>clic droit</strong> sur la branche Off-Line → sélectionner <code>Importer le programme</code> → sélectionner le fichier <code>.dxl</code> correspondant au nouveau moteur.</span></div>
+      <div class="substep"><span class="sn">4</span><span>Une fois importé, le profil du nouveau moteur apparaît dans la branche Off-Line. <strong>Copier</strong> ce profil (clic droit → <code>Copy</code>) et le <strong>coller</strong> dans la partie <code>On-Line Drives</code> (clic droit → <code>Paste</code>).</span></div>
+      <div class="substep"><span class="sn">5</span><span>Une fenêtre de confirmation s'ouvre — <strong>tout accepter</strong> pour valider le transfert de la nouvelle configuration vers le drive physique.</span></div>
+      <div class="note note-danger"><strong>Attention :</strong> S'assurer que la communication série est bien établie avec le drive avant de lancer cette opération. Vérifier que le drive apparaît bien sous <code>On-Line Drives</code>. Une interruption de communication pendant le transfert peut corrompre la configuration du drive.</div>
+      <div class="note note-ok"><strong>Après transfert :</strong> Aller dans <code>Show Commands</code> → cliquer <code>Save to EEPROM</code> pour sauvegarder définitivement la nouvelle configuration. Couper et remettre l'alimentation du drive pour valider.</div>
+    </div></div>
+  </div>
+
+</main>
+
+<footer>
+  <span>Ultra3000 2098-DSD-075 · Ultraware v1.8 · Publication 2098-UM001G-EN-P (Fév. 2011)</span>
+  <span>Technicien : Antonio PASCOAL</span>
+</footer>
+
+<script>
+  document.querySelectorAll('.step').forEach((step, i) => {
+    step.querySelector('.step-head').addEventListener('click', () => {
+      const isOpen = step.classList.contains('open');
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('open'));
+      if (!isOpen) step.classList.add('open');
+    });
+  });
+  document.querySelector('.step').classList.add('open');
+</script>
+</body>
+</html>

@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Configurations Moteurs — Ultra3000 2098-DSD-075</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #f4f1ec;
+    --surface:   #ffffff;
+    --surface2:  #ece9e3;
+    --border:    #d9d4cc;
+    --border2:   #c4bdb4;
+    --text:      #18160f;
+    --muted:     #6b6455;
+    --faint:     #a09890;
+
+    --cy:        #1a3d6b;   /* CYBEX bleu */
+    --cy-bg:     #e6edf6;
+    --cy-bd:     #aec4df;
+    --cy-mid:    #2a5a9e;
+
+    --gt:        #5c2a00;   /* Getty brun */
+    --gt-bg:     #f5ebe0;
+    --gt-bd:     #d4a97a;
+    --gt-mid:    #8b4513;
+
+    --diff:      #1a5c2a;   /* valeur differente */
+    --diff-bg:   #e6f4ea;
+    --same:      #4a4a4a;
+
+    --warn:      #7a3d00;
+    --warn-bg:   #fff3e0;
+    --warn-bd:   #f0a050;
+
+    --mono: 'IBM Plex Mono', monospace;
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+    --r: 8px;
+    --rl: 14px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--text);
+    color: #f4f1ec;
+    padding: 2rem 2.5rem 1.8rem;
+  }
+
+  .hdr-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .hdr-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #9c9080;
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  h1 strong {
+    font-style: normal;
+    font-weight: 600;
+    color: #ffffff;
+  }
+
+  .hdr-sub {
+    font-size: 13px;
+    color: #9c9080;
+    margin-top: 6px;
+    font-weight: 300;
+  }
+
+  .hdr-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+
+  .badge-cy { background: var(--cy-bg); color: var(--cy); }
+  .badge-gt { background: var(--gt-bg); color: var(--gt); }
+  .badge-ref { background: rgba(255,255,255,0.08); color: #9c9080; }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 2.5rem 4rem;
+  }
+
+  /* ── NOTICE ── */
+  .notice {
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-bd);
+    border-radius: var(--r);
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--warn);
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .notice-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── TABLE ── */
+  .cmp-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--rl);
+    overflow: hidden;
+    font-size: 13px;
+  }
+
+  .cmp-table thead tr {
+    background: var(--surface2);
+  }
+
+  .cmp-table thead th {
+    padding: 10px 14px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .th-param { color: var(--muted); width: 28%; }
+
+  .th-cy {
+    color: var(--cy);
+    width: 22%;
+    background: var(--cy-bg);
+    border-bottom: 2px solid var(--cy) !important;
+  }
+
+  .th-gt {
+    color: var(--gt);
+    width: 22%;
+    background: var(--gt-bg);
+    border-bottom: 2px solid var(--gt) !important;
+  }
+
+  .th-note { color: var(--muted); width: 28%; }
+
+  .cmp-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+  .cmp-table tbody tr:last-child { border-bottom: none; }
+  .cmp-table tbody tr:hover { background: var(--surface2); }
+
+  .cmp-table tbody tr.diff-row { background: #f0faf2; }
+  .cmp-table tbody tr.diff-row:hover { background: #e6f4ea; }
+
+  .cmp-table td {
+    padding: 9px 14px;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .td-param {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .td-cy {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--cy);
+  }
+
+  .td-gt {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gt);
+  }
+
+  .td-same .td-cy,
+  .td-same .td-gt { color: var(--muted); }
+
+  .td-note {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .diff-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 1px 6px;
+    border-radius: 2px;
+    background: var(--diff-bg);
+    color: var(--diff);
+    border: 1px solid #a8d8b8;
+    margin-left: 4px;
+    vertical-align: middle;
+    font-weight: 600;
+  }
+
+  .same-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 1px 6px;
+    border-radius: 2px;
+    background: var(--surface2);
+    color: var(--faint);
+    border: 1px solid var(--border);
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+
+  .unit {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--faint);
+    margin-left: 3px;
+  }
+
+  /* ── GROUP ROW ── */
+  .group-row td {
+    background: var(--surface2) !important;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    padding: 6px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── TUNING GRID ── */
+  .tuning-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 2.5rem;
+  }
+
+  @media (max-width: 680px) { .tuning-grid { grid-template-columns: 1fr; } }
+
+  .tuning-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--rl);
+    overflow: hidden;
+  }
+
+  .tuning-card-head {
+    padding: 12px 16px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-bottom: 2px solid;
+  }
+
+  .tuning-card.cy .tuning-card-head { background: var(--cy-bg); color: var(--cy); border-color: var(--cy); }
+  .tuning-card.gt .tuning-card-head { background: var(--gt-bg); color: var(--gt); border-color: var(--gt); }
+
+  .tuning-rows { padding: 0; }
+
+  .tuning-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .tuning-row:last-child { border-bottom: none; }
+
+  .tr-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .tr-val {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .tuning-card.cy .tr-val { color: var(--cy); }
+  .tuning-card.gt .tr-val { color: var(--gt); }
+
+  .tr-unit {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--faint);
+    margin-left: 4px;
+  }
+
+  .tuning-section-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--faint);
+    padding: 6px 16px 2px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── SUMMARY BOX ── */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 600px) { .summary-grid { grid-template-columns: 1fr; } }
+
+  .summary-card {
+    border: 1px solid var(--border);
+    border-radius: var(--rl);
+    overflow: hidden;
+  }
+
+  .sum-head {
+    padding: 10px 16px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .summary-card.cy .sum-head { background: var(--cy-bg); color: var(--cy); border-bottom-color: var(--cy-bd); }
+  .summary-card.gt .sum-head { background: var(--gt-bg); color: var(--gt); border-bottom-color: var(--gt-bd); }
+
+  .sum-body { background: var(--surface); padding: 14px 16px; }
+
+  .sum-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    padding: 4px 0;
+    border-bottom: 1px dotted var(--border);
+  }
+  .sum-item:last-child { border-bottom: none; }
+
+  .sum-label { color: var(--muted); }
+  .sum-val { font-family: var(--mono); font-weight: 600; }
+  .summary-card.cy .sum-val { color: var(--cy); }
+  .summary-card.gt .sum-val { color: var(--gt); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    padding: 1.2rem 2.5rem;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--faint);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  /* anim */
+  .section { animation: fadeUp 0.4s both; }
+  .section:nth-child(1) { animation-delay: 0ms; }
+  .section:nth-child(2) { animation-delay: 60ms; }
+  .section:nth-child(3) { animation-delay: 120ms; }
+  .section:nth-child(4) { animation-delay: 180ms; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-inner">
+    <div>
+      <div class="hdr-tag">Ultra3000 2098-DSD-075 · Ultraware · CSMI Humac Norm</div>
+      <h1>Fiche de référence<br><strong>Configurations moteurs</strong></h1>
+      <p class="hdr-sub">Paramètres moteur et tuning lus en ligne depuis le drive — source : Ultraware</p>
+    </div>
+    <div class="hdr-badges">
+      <span class="badge badge-cy">CYBEX (Rockwell)</span>
+      <span class="badge badge-gt">Getty HiTorque (CSMI)</span>
+      <span class="badge badge-ref">REV 0.9 · MD-B4020E</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div class="notice">
+    <span class="notice-icon">⚠</span>
+    <span><strong>Important :</strong> Ces paramètres ont été relevés directement depuis le drive en ligne via Ultraware. Ils constituent la configuration de référence validée pour chaque moteur. Toute modification doit être sauvegardée via <code>Save to EEPROM</code> et archivée. Le tuning (gains P/I/D, Kp, Kd…) est identique sur les deux moteurs — seuls les paramètres moteur physiques diffèrent.</span>
+  </div>
+
+  <!-- ══ RÉSUMÉ RAPIDE ══ -->
+  <div class="section">
+    <div class="section-title">Résumé rapide — paramètres clés</div>
+    <div class="summary-grid">
+      <div class="summary-card cy">
+        <div class="sum-head">Moteur CYBEX — Rockwell</div>
+        <div class="sum-body">
+          <div class="sum-item"><span class="sum-label">Modèle</span><span class="sum-val">CYBEX (Custom)</span></div>
+          <div class="sum-item"><span class="sum-label">Vitesse max</span><span class="sum-val">3100 RPM</span></div>
+          <div class="sum-item"><span class="sum-label">Courant continu</span><span class="sum-val">15,00 A</span></div>
+          <div class="sum-item"><span class="sum-label">Courant intermittent</span><span class="sum-val">50,00 A</span></div>
+          <div class="sum-item"><span class="sum-label">Constante de couple</span><span class="sum-val">0,7229 N-m/A</span></div>
+          <div class="sum-item"><span class="sum-label">Résistance</span><span class="sum-val">2,301 Ω</span></div>
+          <div class="sum-item"><span class="sum-label">Inductance</span><span class="sum-val">10,699 mH</span></div>
+          <div class="sum-item"><span class="sum-label">Inertie</span><span class="sum-val">3,500 Kg-cm²</span></div>
+          <div class="sum-item"><span class="sum-label">Protection logicielle</span><span class="sum-val">OUI</span></div>
+          <div class="sum-item"><span class="sum-label">Auto Motor Iden</span><span class="sum-val">Disabled</span></div>
+        </div>
+      </div>
+      <div class="summary-card gt">
+        <div class="sum-head">Moteur Getty HiTorque — CSMI</div>
+        <div class="sum-body">
+          <div class="sum-item"><span class="sum-label">Modèle</span><span class="sum-val">CSMI - Gettys HiTorque</span></div>
+          <div class="sum-item"><span class="sum-label">Vitesse max</span><span class="sum-val">3981 RPM</span></div>
+          <div class="sum-item"><span class="sum-label">Courant continu</span><span class="sum-val">10,18 A</span></div>
+          <div class="sum-item"><span class="sum-label">Courant intermittent</span><span class="sum-val">40,00 A</span></div>
+          <div class="sum-item"><span class="sum-label">Constante de couple</span><span class="sum-val">0,5439 N-m/A</span></div>
+          <div class="sum-item"><span class="sum-label">Résistance</span><span class="sum-val">1,469 Ω</span></div>
+          <div class="sum-item"><span class="sum-label">Inductance</span><span class="sum-val">6,102 mH</span></div>
+          <div class="sum-item"><span class="sum-label">Inertie</span><span class="sum-val">5,100 Kg-cm²</span></div>
+          <div class="sum-item"><span class="sum-label">Protection logicielle</span><span class="sum-val">NON</span></div>
+          <div class="sum-item"><span class="sum-label">Auto Motor Iden</span><span class="sum-val">Disabled</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TABLEAU COMPARATIF MOTEUR ══ -->
+  <div class="section">
+    <div class="section-title">Comparaison détaillée — paramètres moteur</div>
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th class="th-param">Paramètre</th>
+          <th class="th-cy">CYBEX (Rockwell)</th>
+          <th class="th-gt">Getty HiTorque (CSMI)</th>
+          <th class="th-note">Remarque</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr class="group-row"><td colspan="4">General</td></tr>
+
+        <tr>
+          <td class="td-param">Motor Model</td>
+          <td class="td-cy">CYBEX</td>
+          <td class="td-gt">CSMI - Gettys HiTorque</td>
+          <td class="td-note"><span class="diff-badge">diff</span> Nom du profil dans Ultraware</td>
+        </tr>
+        <tr>
+          <td class="td-param">Motor Flag</td>
+          <td class="td-cy">Custom</td>
+          <td class="td-gt">Custom</td>
+          <td class="td-note"><span class="same-badge">idem</span> Les deux sont des moteurs personnalisés</td>
+        </tr>
+        <tr>
+          <td class="td-param">Motor Type</td>
+          <td class="td-cy">Rotary</td>
+          <td class="td-gt">Rotary</td>
+          <td class="td-note"><span class="same-badge">idem</span></td>
+        </tr>
+        <tr class="diff-row">
+          <td class="td-param">Torque Constant</td>
+          <td class="td-cy">0,7229 <span class="unit">N-m/A</span></td>
+          <td class="td-gt">0,5439 <span class="unit">N-m/A</span></td>
+          <td class="td-note"><span class="diff-badge">diff</span> CYBEX produit plus de couple par ampère — moteur plus efficace en couple</td>
+        </tr>
+        <tr class="diff-row">
+          <td class="td-param">Inertia</td>
+          <td class="td-cy">3,500 <span class="unit">Kg-cm²</span></td>
+          <td class="td-gt">5,100 <span class="unit">Kg-cm²</span></td>
+          <td class="td-note"><span class="diff-badge">diff</span> Getty plus inertiel — réponse dynamique plus lente</td>
+        </tr>
+        <tr>
+          <td class="td-param">Poles/Revolution</td>
+          <td class="td-cy">6</td>
+          <td class="td-gt">6</td>
+          <td class="td-note"><span class="same-badge">idem</span> Même architecture magnétique</td>
+        </tr>
+        <tr>
+          <td class="td-param">Integral Limits</td>
+          <td class="td-cy">No</td>
+          <td class="td-gt">No</td>
+          <td class="td-note"><span class="same-badge">idem</span></td>
+        </tr>
+        <tr>
+          <td class="td-param">Gear Box</td>
+          <td class="td-cy">No</td>
+          <td class="td-gt">No</td>
+          <td class="td-note"><span class="same-badge">idem</span> Couplage direct dans les deux cas</td>
+        </tr>
+
+        <tr class="group-row"><td colspan="4">Électrique</td></tr>
+
+        <tr>
+          <td class="td-param">Rated Voltage</td>
+          <td class="td-cy">230 <span class="unit">V</span></td>
+          <td class="td-gt">230 <span class="unit">V</span></td>
+          <td class="td-note"><span class="same-badge">idem</span> Compatible avec le drive 230V</td>
+        </tr>
+        <tr class="diff-row">
+          <td class="td-param">Resistance</td>
+          <td class="td-cy">2,301 <span class="unit">Ω</span></td>
+          <td class="td-gt">1,469 <span class="unit">Ω</span></td>
+          <td class="td-note"><span class="diff-badge">diff</span> Getty moins résistif → pertes Joule plus faibles</td>
+        </tr>
+        <tr class="diff-row">
+          <td class="td-param">Inductance</td>
+          <td class="td-cy">10,699 <span class="unit">mH</span></td>
+          <td class="td-gt">6,102 <span class="unit">mH</span></td>
+          <td class="td-note"><span class="diff-badge">diff</span> CYBEX plus inductif → filtre naturel supérieur sur les harmoniques PWM</td>
+        </tr>
+        <tr>
+          <td class="td-param">Flux Saturation 1–8</td>
+          <td class="td-cy">1,000 (×8)</td>
+          <td class="td-gt">1,000 (×8)</td>
+          <td class="td-note"><span class="same-badge">idem</span> Pas de saturation magnétique configurée</td>
+        </tr>
+
+        <tr class="group-row"><td colspan="4">Ratings (limites nominales)</td></tr>
+
+        <tr class="diff-row">
+          <td class="td-param">Maximum Speed</td>
+          <td class="td-cy">3100 <span class="unit">RPM</span></td>
+          <td class="td-gt">3981 <span class="unit">RPM</span></td>
+          <td class="td-note"><span class="diff-badge">diff</span> Getty admet une vitesse max supérieure de ~28%</td>
+        </tr>
+        <tr class="diff-row">
+          <td class="td-param">Intermittent Current</td>
+          <td class="td-cy">50,00 <span class="unit">A</span></td>
+          <td class="td-gt">40,00 <span class="unit">A</span></td>
+          <td class="td-note"><span class="diff-badge">diff</span> CYBEX supporte plus de courant crête — robustesse accrue</td>
+        </tr>
+        <tr class="diff-row">
+          <td class="td-param">Continuous Current</td>
+          <td class="td-cy">15,00 <span class="unit">A</span></td>
+          <td class="td-gt">10,18 <span class="unit">A</span></td>
+          <td class="td-note"><span class="diff-badge">diff</span> CYBEX admet 47% de courant continu en plus — moteur plus robuste thermiquement</td>
+        </tr>
+
+        <tr class="group-row"><td colspan="4">Feedback (encodeur)</td></tr>
+
+        <tr>
+          <td class="td-param">Encoder</td>
+          <td class="td-cy">Incremental</td>
+          <td class="td-gt">Incremental</td>
+          <td class="td-note"><span class="same-badge">idem</span> Même type d'encodeur — câblage CN2 identique</td>
+        </tr>
+        <tr>
+          <td class="td-param">Commutation</td>
+          <td class="td-cy">Sinusoidal</td>
+          <td class="td-gt">Sinusoidal</td>
+          <td class="td-note"><span class="same-badge">idem</span></td>
+        </tr>
+        <tr>
+          <td class="td-param">Sinusoidal Startup</td>
+          <td class="td-cy">Self-Sensing</td>
+          <td class="td-gt">Self-Sensing</td>
+          <td class="td-note"><span class="same-badge">idem</span> Pas de besoin de séquence Hall au démarrage</td>
+        </tr>
+        <tr>
+          <td class="td-param">Hall Input Offset</td>
+          <td class="td-cy">0 <span class="unit">deg</span></td>
+          <td class="td-gt">0 <span class="unit">deg</span></td>
+          <td class="td-note"><span class="same-badge">idem</span></td>
+        </tr>
+        <tr>
+          <td class="td-param">Lines/Revolution</td>
+          <td class="td-cy">2160</td>
+          <td class="td-gt">2160</td>
+          <td class="td-note"><span class="same-badge">idem</span> Résolution encodeur identique — même câble CN2 compatible</td>
+        </tr>
+
+        <tr class="group-row"><td colspan="4">Thermique</td></tr>
+
+        <tr>
+          <td class="td-param">Integral Thermostat</td>
+          <td class="td-cy">Yes</td>
+          <td class="td-gt">Yes</td>
+          <td class="td-note"><span class="same-badge">idem</span> Thermostat moteur actif sur les deux — pin TS CN2</td>
+        </tr>
+        <tr class="diff-row">
+          <td class="td-param">Software Protection</td>
+          <td class="td-cy">Yes</td>
+          <td class="td-gt">No</td>
+          <td class="td-note"><span class="diff-badge">diff !</span> CYBEX a la protection logicielle thermique activée — Getty ne l'a pas. E22 possible uniquement sur CYBEX</td>
+        </tr>
+        <tr class="diff-row">
+          <td class="td-param">Rth(w-e)</td>
+          <td class="td-cy">32,8 <span class="unit">C/W</span></td>
+          <td class="td-gt">32767,0 <span class="unit">C/W</span></td>
+          <td class="td-note"><span class="diff-badge">diff</span> Valeur Getty = 32767 → valeur par défaut non configurée (paramètre ignoré car Software Protection = No)</td>
+        </tr>
+        <tr class="diff-row">
+          <td class="td-param">Cth(w-e)</td>
+          <td class="td-cy">1,00 <span class="unit">W-s/C</span></td>
+          <td class="td-gt">1,00 <span class="unit">W-s/C</span></td>
+          <td class="td-note"><span class="same-badge">idem</span></td>
+        </tr>
+        <tr class="diff-row">
+          <td class="td-param">Rth(w-a)</td>
+          <td class="td-cy">0,680 <span class="unit">C/W</span></td>
+          <td class="td-gt">32767,000 <span class="unit">C/W</span></td>
+          <td class="td-note"><span class="diff-badge">diff</span> Même raison — valeur par défaut sur Getty</td>
+        </tr>
+        <tr class="diff-row">
+          <td class="td-param">Cth(w-a)</td>
+          <td class="td-cy">4349,0 <span class="unit">W-s/C</span></td>
+          <td class="td-gt">1,0 <span class="unit">W-s/C</span></td>
+          <td class="td-note"><span class="diff-badge">diff</span> Modèle thermique actif uniquement sur CYBEX</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══ TUNING ══ -->
+  <div class="section">
+    <div class="section-title">Tuning — gains de régulation (identiques sur les deux moteurs)</div>
+    <div class="tuning-grid">
+      <div class="tuning-card cy">
+        <div class="tuning-card-head">CYBEX — Tuning</div>
+        <div class="tuning-rows">
+          <div class="tuning-section-label">Velocity Regulator Gains</div>
+          <div class="tuning-row"><span class="tr-label">P</span><span class="tr-val">200</span></div>
+          <div class="tuning-row"><span class="tr-label">I</span><span class="tr-val">66</span></div>
+          <div class="tuning-row"><span class="tr-label">D</span><span class="tr-val">0</span></div>
+          <div class="tuning-section-label">Position Regulator Gains</div>
+          <div class="tuning-row"><span class="tr-label">Kp</span><span class="tr-val">4,00</span></div>
+          <div class="tuning-row"><span class="tr-label">Kd</span><span class="tr-val">0,00</span></div>
+          <div class="tuning-row"><span class="tr-label">Kvff</span><span class="tr-val">100</span></div>
+          <div class="tuning-row"><span class="tr-label">Ki</span><span class="tr-val">0,00</span></div>
+          <div class="tuning-row"><span class="tr-label">Ki Zone</span><span class="tr-val">1000 <span class="tr-unit">counts</span></span></div>
+          <div class="tuning-row"><span class="tr-label">Kaff</span><span class="tr-val">0 <span class="tr-unit">%</span></span></div>
+          <div class="tuning-section-label">Low Pass Filter</div>
+          <div class="tuning-row"><span class="tr-label">Enable</span><span class="tr-val">Enabled</span></div>
+          <div class="tuning-row"><span class="tr-label">Bandwidth</span><span class="tr-val">150 <span class="tr-unit">Hz</span></span></div>
+        </div>
+      </div>
+      <div class="tuning-card gt">
+        <div class="tuning-card-head">Getty HiTorque — Tuning</div>
+        <div class="tuning-rows">
+          <div class="tuning-section-label">Velocity Regulator Gains</div>
+          <div class="tuning-row"><span class="tr-label">P</span><span class="tr-val">200</span></div>
+          <div class="tuning-row"><span class="tr-label">I</span><span class="tr-val">66</span></div>
+          <div class="tuning-row"><span class="tr-label">D</span><span class="tr-val">0</span></div>
+          <div class="tuning-section-label">Position Regulator Gains</div>
+          <div class="tuning-row"><span class="tr-label">Kp</span><span class="tr-val">4,00</span></div>
+          <div class="tuning-row"><span class="tr-label">Kd</span><span class="tr-val">0,00</span></div>
+          <div class="tuning-row"><span class="tr-label">Kvff</span><span class="tr-val">100</span></div>
+          <div class="tuning-row"><span class="tr-label">Ki</span><span class="tr-val">0,00</span></div>
+          <div class="tuning-row"><span class="tr-label">Ki Zone</span><span class="tr-val">1000 <span class="tr-unit">counts</span></span></div>
+          <div class="tuning-row"><span class="tr-label">Kaff</span><span class="tr-val">0 <span class="tr-unit">%</span></span></div>
+          <div class="tuning-section-label">Low Pass Filter</div>
+          <div class="tuning-row"><span class="tr-label">Enable</span><span class="tr-val">Enabled</span></div>
+          <div class="tuning-row"><span class="tr-label">Bandwidth</span><span class="tr-val">150 <span class="tr-unit">Hz</span></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="notice">
+      <span class="notice-icon">ℹ</span>
+      <span>Les gains de tuning sont <strong>strictement identiques</strong> sur les deux moteurs (P=200, I=66, D=0, Kp=4, Kvff=100, LPF 150Hz). Cela simplifie le changement de moteur — le tuning ne nécessite pas d'être reconfiguré lors d'un remplacement moteur par le même modèle.</span>
+    </div>
+  </div>
+
+  <!-- ══ POINTS CRITIQUES ══ -->
+  <div class="section">
+    <div class="section-title">Points critiques à retenir pour la maintenance</div>
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th class="th-param" style="width:35%">Point de vigilance</th>
+          <th class="th-cy" style="width:30%">CYBEX</th>
+          <th class="th-gt" style="width:35%">Getty HiTorque</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="diff-row">
+          <td class="td-param">Protection thermique logicielle</td>
+          <td class="td-cy">Activée → E22 possible</td>
+          <td class="td-gt">Désactivée → surveiller manuellement la température</td>
+        </tr>
+        <tr class="diff-row">
+          <td class="td-param">Courant continu admissible</td>
+          <td class="td-cy">15 A — moteur plus robuste</td>
+          <td class="td-gt">10,18 A — surcharge plus rapidement atteinte</td>
+        </tr>
+        <tr class="diff-row">
+          <td class="td-param">Courant intermittent (crête)</td>
+          <td class="td-cy">50 A</td>
+          <td class="td-gt">40 A — ne pas dépasser lors d'accélérations rapides</td>
+        </tr>
+        <tr>
+          <td class="td-param">Encodeur (CN2)</td>
+          <td class="td-cy">2160 L/Rev, Incremental, Self-Sensing</td>
+          <td class="td-gt">2160 L/Rev, Incremental, Self-Sensing — câble CN2 interchangeable</td>
+        </tr>
+        <tr class="diff-row">
+          <td class="td-param">Auto Motor Identification</td>
+          <td class="td-cy">Disabled</td>
+          <td class="td-gt">Disabled — confirmer à chaque remplacement</td>
+        </tr>
+        <tr class="diff-row">
+          <td class="td-param">Constante de couple</td>
+          <td class="td-cy">0,7229 N-m/A — couple élevé</td>
+          <td class="td-gt">0,5439 N-m/A — couple plus faible à courant égal</td>
+        </tr>
+        <tr>
+          <td class="td-param">Commutation démarrage</td>
+          <td class="td-cy">Self-Sensing — pas de Halls</td>
+          <td class="td-gt">Self-Sensing — pas de Halls → E11 ne devrait pas apparaître</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+<footer>
+  <span>Ultra3000 2098-DSD-075 · Ultraware v1.8 · Configurations relevées en ligne</span>
+  <span>Technicien : Antonio PASCOAL</span>
+</footer>
+
+</body>
+</html>
